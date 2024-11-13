@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.3-dist/css/bootstrap.css">
+</head>
+    <div class="container mx-auto mt-lg-5 mt-3 shadow-sm px-lg-5 px-2 py-3">
+        <h3 class="my-lg-4 my-2 text-center text-decoration-underline text-danger">E-Commerce</h3>
+        <div class="alert alert-danger p-2 text-center" id="error" style="display: none;">Space cannot be blank</div>
+        <input type="text" class="form-control form-control-sm shadow-none my-3" placeholder="Enter your item" id="course" autofocus>
+        <button onclick="addCourse()" class="btn btn-danger w-100 my-1 btn-sm">Add Item</button>
+    </div>
+    <div class="container mx-auto mt-lg-5 mt-3 shadow-sm px-lg-5 px-2 py-3" >
+        <table class="px-lg-5 px-2 py-3 table table-bordered table-striped" id="displayCourses">
+            <p class="text-center alert alert-secondary" id="initialMsg">No items yet</p>
+        </table>
+    </div>
+    <button onclick="deleteFirst()"  style="background-color: #212529; color: white; margin: 30px 0px 0px 180px; height: 60px; width: 7%; border: none; border-radius: 5px;">
+        Delete first item
+    </button>
+    <button onclick="addToStart()"  style="background-color: #0d6efd; color: white; margin: 30px 0px 0px 100px; height: 60px; width: 7%; border: none; border-radius: 5px;">
+        Add Item to the start
+    </button>
+    <button onclick="deleteLast()" style="background-color: #198754; color: white; margin: 30px 0px 0px 100px; height: 60px; width: 7%; border: none; border-radius: 5px;">
+        Delete last Item
+    </button>
+</button>
+<button style="background-color: #0dcaf0; margin: 20px 0px 0px 100px; height: 60px; width: 7%; border: none; border-radius: 5px;" onclick="edit()">
+    Edit Item
+</button>
+<button onclick="deleteAny()"  style="background-color: #ffc107; margin: 30px 0px 0px 100px; height: 60px; width: 7%; border: none; border-radius: 5px;" >
+    Delete Any Item
+</button>
+<button onclick="deleteAll()" style="background-color: #6c757d; color: white; margin: 30px 0px 0px 100px; height: 60px; width: 7%; border: none; border-radius: 5px;">
+    Delete All Items
+</button>
+
+
+<body>
+<script>
+    var allCourses = []
+
+    function addCourse(){
+        if (course.value == ""){
+        error.style.display = 'block'
+        } else{
+        error.style.display = 'none'
+        initialMsg.style.display = 'none'
+        allCourses.push(course.value)
+        document.getElementById('course').value = ""
+        console.log(allCourses);
+        showCourses()
+        }
+    } 
+    function deleteFirst(){
+        allCourses.shift()
+        // console.log(allCourses);
+        showCourses()
+    }
+    function deleteLast(){
+        allCourses.pop()
+        showCourses()
+    }
+    function addToStart(){
+        var newInput = prompt('Enter your course')
+        allCourses.unshift(newInput)
+        showCourses()
+    }
+    function deleteAll(){
+        var confam = confirm("Are you sure you wanna delete all?")
+        console.log(confam);
+        if (confam === true){
+            allCourses.splice(0,allCourses.length)
+            showCourses()
+            displayCourses.style.display = 'none'
+            initialMsg.style.display = 'block'
+        } else{
+            showCourses()
+        }
+    }
+    function deleteAny(){
+        var checkCourse = Number(prompt("Type the number you wanna delete"))
+        if (checkCourse <= allCourses.length){
+            console.log(checkCourse);
+            var confam = confirm("Are you sure you wanna delete all?")
+            if (confam ===true){
+                allCourses.splice(checkCourse-1,1)
+                showCourses()
+            }
+        } else{
+            alert("Enter a valid number")
+        }
+    }
+    function edit(){
+        var checkCourse = Number(prompt("Type the number you wanna edit"))
+        if (checkCourse <= allCourses.length){
+            console.log(checkCourse);
+            var confam = confirm("Are you sure you wanna edit?")
+            if (confam ===true){
+                allCourses.splice(checkCourse-1,0,)
+                showCourses()
+            }
+        } else{
+            alert("Enter a valid number")
+        }
+    }
+
+    function showCourses(){
+        displayCourses.innerHTML = ""
+        displayCourses.innerHTML +=`
+        <thead>
+            <tr>
+                <td class="fw-bold text-center">S/N</td>
+                <td class="fw-bold text-center">Name</td>
+            </td>
+        </thead>`
+        for(i=0; i < allCourses.length; i++){
+            // displayCourses.innerHTML += `<p>${i+1}. ${allCourses[i]}</p>`
+            displayCourses.innerHTML +=`
+            <tbody>
+                <tr>
+                    <td class= "text-center">${i+1}</td>
+                    <td class= "text-center">${allCourses[i]}</td>
+                </tr>
+            </tbody>`
+        }
+    }
+</script>
+</body>
+</html>
